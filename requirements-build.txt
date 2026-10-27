@@ -1,0 +1,5 @@
+# Versiones con las que se probó el bundle. Solo hacen falta al CONSTRUIR; el resultado no necesita nada.
+PySide6-Essentials==6.12.0
+shiboken6==6.12.0
+cryptography==50.0.1
+pyinstaller==6.22.3

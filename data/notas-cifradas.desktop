@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Notas Cifradas
+GenericName=Notas cifradas
+Comment=Notas protegidas con AES-256-GCM y Argon2id
+Exec=@BIN@
+Icon=notas-cifradas
+Terminal=false
+Categories=Qt;KDE;Utility;TextEditor;
+Keywords=notas;cifrado;cifradas;seguridad;AES;contraseña;
+StartupWMClass=notas-cifradas
