@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.lumiere11.NotasCifradas</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+
+  <name>Notas Cifradas</name>
+  <summary>Encrypted notes protected with AES-256-GCM</summary>
+  <summary xml:lang="es">Notas cifradas con AES-256-GCM</summary>
+  <developer id="io.github.lumiere11">
+    <name>lumiere11</name>
+  </developer>
+
+  <description>
+    <p>A notes app for KDE Plasma that stores everything in a single encrypted vault file.</p>
+    <p xml:lang="es">Una aplicación de notas para KDE Plasma que guarda todo en un único archivo cifrado.</p>
+    <ul>
+      <li>AES-256-GCM authenticated encryption with a fresh random nonce on every save</li>
+      <li xml:lang="es">Cifrado autenticado AES-256-GCM con un nonce aleatorio nuevo en cada guardado</li>
+      <li>Key derived from your master password with Argon2id (512 MiB, 3 passes, 4 lanes)</li>
+      <li xml:lang="es">Clave derivada de tu contraseña maestra con Argon2id (512 MiB, 3 pasadas, 4 lanes)</li>
+      <li>Titles, note count and dates are inside the encryption; file size is padded to 4 KiB</li>
+      <li xml:lang="es">Títulos, número de notas y fechas van dentro del cifrado; el tamaño del archivo se redondea a 4 KiB</li>
+      <li>Locks automatically when idle, when Plasma locks the screen, or on demand</li>
+      <li xml:lang="es">Se bloquea sola por inactividad, al bloquear la pantalla de Plasma o cuando tú quieras</li>
+      <li>Runs in a sandbox with no network access and no access to your files</li>
+      <li xml:lang="es">Se ejecuta en un sandbox sin acceso a la red ni a tus archivos</li>
+    </ul>
+    <p>There is no password recovery: if you forget the master password the notes cannot be decrypted.</p>
+    <p xml:lang="es">No hay recuperación de contraseña: si olvidas la contraseña maestra las notas no se pueden descifrar.</p>
+  </description>
+
+  <launchable type="desktop-id">io.github.lumiere11.NotasCifradas.desktop</launchable>
+  <provides>
+    <binary>notas-cifradas</binary>
+  </provides>
+  <url type="homepage">https://github.com/lumiere11/notas-cifradas</url>
+  <url type="bugtracker">https://github.com/lumiere11/notas-cifradas/issues</url>
+  <categories>
+    <category>Utility</category>
+    <category>TextEditor</category>
+  </categories>
+  <keywords>
+    <keyword>notes</keyword>
+    <keyword>encryption</keyword>
+    <keyword>notas</keyword>
+    <keyword>cifrado</keyword>
+  </keywords>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="1.0.0" date="2026-10-27">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

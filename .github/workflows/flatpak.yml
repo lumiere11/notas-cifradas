@@ -1,0 +1,45 @@
+name: Flatpak
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compilar (x86_64)
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:kde-6.11
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v4
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: notas-cifradas.flatpak
+          manifest-path: flatpak/io.github.lumiere11.NotasCifradas.yml
+          artifact-name: notas-cifradas-x86_64-flatpak
+
+  release:
+    name: Publicar en Releases
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: notas-cifradas-x86_64-flatpak
+      - name: Crear la release con el .flatpak y su hash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha256sum notas-cifradas.flatpak > notas-cifradas.flatpak.sha256
+          gh release create "$GITHUB_REF_NAME" notas-cifradas.flatpak notas-cifradas.flatpak.sha256 \
+            --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes

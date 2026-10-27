@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Notas Cifradas
+GenericName=Notas cifradas
+GenericName[en]=Encrypted notes
+Comment=Notas protegidas con AES-256-GCM y Argon2id
+Comment[en]=Notes protected with AES-256-GCM and Argon2id
+Exec=notas-cifradas
+Icon=io.github.lumiere11.NotasCifradas
+Terminal=false
+Categories=Qt;KDE;Utility;TextEditor;
+Keywords=notas;cifrado;cifradas;seguridad;AES;contraseña;notes;encryption;

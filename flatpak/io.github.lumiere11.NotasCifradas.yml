@@ -1,0 +1,52 @@
+app-id: io.github.lumiere11.NotasCifradas
+runtime: org.kde.Platform
+runtime-version: '6.11'
+sdk: org.kde.Sdk
+# PySide6 compilado contra el Qt del runtime. Su rama debe coincidir con la del runtime.
+base: io.qt.PySide.BaseApp
+base-version: '6.11'
+command: notas-cifradas
+
+# Permisos mínimos. Sin red y sin acceso al sistema de archivos del usuario: las notas
+# viven en ~/.var/app/io.github.lumiere11.NotasCifradas/data y la app no puede enviarlas a ningún sitio.
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  # colores de Plasma (solo lectura)
+  - --filesystem=xdg-config/kdeglobals:ro
+  # para bloquear la bóveda cuando Plasma bloquea la pantalla
+  - --talk-name=org.freedesktop.ScreenSaver
+
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+
+modules:
+  # cryptography (Argon2id + AES-GCM) y sus dependencias, desde ruedas de PyPI con hash fijado.
+  # Se regenera con ./update-python-deps.py
+  - python3-cryptography.json
+
+  - name: notas-cifradas
+    buildsystem: simple
+    build-commands:
+      - install -d /app/share/notas-cifradas
+      - cp -r notas_cifradas /app/share/notas-cifradas/
+      - python3 -m compileall -q /app/share/notas-cifradas
+      # La suite completa se ejecuta durante la compilación, con el Qt y el PySide6 reales del runtime.
+      - QT_QPA_PLATFORM=offscreen python3 -m unittest discover -s tests -t .
+      - install -Dm755 flatpak/notas-cifradas.sh /app/bin/notas-cifradas
+      # Comprobación de lo ya instalado, tal como lo arrancará el lanzador.
+      - QT_QPA_PLATFORM=offscreen /app/bin/notas-cifradas --selftest
+      - install -Dm644 flatpak/io.github.lumiere11.NotasCifradas.desktop -t /app/share/applications
+      - install -Dm644 flatpak/io.github.lumiere11.NotasCifradas.metainfo.xml -t /app/share/metainfo
+      - install -Dm644 notas_cifradas/icon.svg /app/share/icons/hicolor/scalable/apps/io.github.lumiere11.NotasCifradas.svg
+    sources:
+      - type: dir
+        path: ..
+        skip:
+          - .git
+          - .github
+          - .flatpak-builder
+          - build
+          - release
+          - repo
